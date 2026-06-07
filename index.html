@@ -119,6 +119,67 @@
       transition: background-color 0.3s ease, color 0.3s ease;
     }
 
+.avatar { cursor: pointer; }
+
+.lightbox-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  animation: lb-fade-in 0.2s ease;
+}
+
+.lightbox-overlay.active { display: flex; }
+
+.lightbox-img-wrap {
+  position: relative;
+  display: inline-flex;
+}
+
+.lightbox-img {
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--accent);
+  box-shadow: 0 0 0 6px var(--accent-glow), 0 20px 60px rgba(0,0,0,0.6);
+  animation: lb-zoom-in 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.lightbox-close {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background: rgba(255,255,255,0.9);
+  border: 1px solid rgba(255,255,255,0.9);
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #111;
+  font-size: 20px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.2s;
+}
+
+.lightbox-close:hover { background: #fff; }
+
+@keyframes lb-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes lb-zoom-in {
+  from { transform: scale(0.7); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+    
     /* ---- Dark/Light Mode Toggle ---- */
     .toggle-wrap {
       position: absolute;
@@ -480,7 +541,7 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
   </button>
 </div>
 
-<div class="avatar">
+<div class="avatar" onclick="openLightbox()">
   <span class="avatar-placeholder"> </span>
 </div>
 
@@ -655,6 +716,20 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
         btn.disabled = false;
       }
     }
+    function openLightbox() {
+  document.getElementById('lightbox').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox(e) {
+  if (e.target.closest && e.target.closest('.lightbox-img-wrap') && !e.target.closest('.lightbox-close')) return;
+  document.getElementById('lightbox').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox({ target: document.body });
+});
   </script>
 
 </body></html>
