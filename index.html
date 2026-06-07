@@ -533,6 +533,13 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
 
 <body>
 
+  <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox(event)">
+  <div class="lightbox-img-wrap">
+    <img class="lightbox-img" src="knickolascage.jpg" alt="Knickolas Cage" />
+    <button class="lightbox-close" aria-label="Close">&times;</button>
+  </div>
+</div>
+
   <div class="card">
 
 <div class="toggle-wrap">
@@ -541,7 +548,7 @@ footer a:hover { color: rgba(255, 255, 255, 0.9); }
   </button>
 </div>
 
-<div class="avatar" onclick="openLightbox()">
+<div class="avatar">
   <span class="avatar-placeholder"> </span>
 </div>
 
